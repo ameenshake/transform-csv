@@ -1,7 +1,7 @@
 {
   "name": "csv-transform",
   "version": "0.1.0",
-  "homepage": "https://ameenshake.github.com/transform-csv",
+  "homepage": "https://ameenshake.github.io/transform-csv/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
