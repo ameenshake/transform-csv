@@ -1,5 +1,5 @@
 import React from "react";
-import Papa from "papaparse"
+import Papa from "papaparse";
 
 class App extends React.Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class App extends React.Component {
       filename: 'transformed.csv'
     }
     this.fileInput = React.createRef();
+    this.downloadAnchor = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -25,8 +26,7 @@ class App extends React.Component {
         this.setState({ filename: file.name })
         const tranformed_csv = Papa.unparse(this.transform(results.data));
         this.setState({ uriComponent: encodeURIComponent(tranformed_csv) });
-        let download = document.getElementById("download");
-        download.click();
+        this.downloadAnchor.current.click();
       }
     })
   }
@@ -75,8 +75,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.uriComponent)
-
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -87,7 +85,11 @@ class App extends React.Component {
         </label>
         <br />
         <button type="submit">Transform and Download</button>
-        {this.state.uriComponent && <a id="download" style={{ display: "none" }} href={"data:text/plain;charset=utf-8," + this.state.uriComponent} download={this.state.filename}></a>}
+        {this.state.uriComponent &&
+          <a ref={this.downloadAnchor}
+            style={{ display: "none" }}
+            href={"data:text/plain;charset=utf-8," + this.state.uriComponent}
+            download={this.state.filename} />}
       </form >
     );
   }
